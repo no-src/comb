@@ -67,6 +67,7 @@ func main() {
 		log.Error(err, "open comb file error")
 		return
 	}
+	defer combFile.Close()
 	combWriter := bufio.NewWriter(combFile)
 	for _, item := range combFileList {
 		data, err := ioutil.ReadFile(filepath.Join(workDir, item.Name()))
@@ -82,6 +83,7 @@ func main() {
 			log.Debug("write [%s] to comb file success with %d bytes", item.Name(), nn)
 		}
 	}
+	combWriter.Flush()
 	log.Info("combine file success")
 }
 
