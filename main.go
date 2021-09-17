@@ -16,13 +16,17 @@ func main() {
 	defer log.Close()
 	log.InitDefaultLogger(log.NewConsoleLogger(log.DebugLevel))
 
-	currentExeFilePath := os.Args[0]
+	currentExeFilePath, err := os.Executable()
+	if err != nil {
+		log.Error(err, "get current executable error")
+		return
+	}
 	workDir := filepath.Dir(currentExeFilePath)
 	if len(os.Args) > 1 {
 		workDir = os.Args[1]
 	}
 
-	workDir, err := filepath.Abs(workDir)
+	workDir, err = filepath.Abs(workDir)
 	if err != nil {
 		log.Error(err, "parse work dir to abs error")
 		return
