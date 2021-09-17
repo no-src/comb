@@ -83,8 +83,12 @@ func main() {
 			log.Debug("write [%s] to comb file success with %d bytes", item.Name(), nn)
 		}
 	}
-	combWriter.Flush()
-	log.Info("combine file success")
+	err = combWriter.Flush()
+	if err != nil {
+		log.Error(err, "flush data to comb file error")
+	} else {
+		log.Info("combine file success")
+	}
 }
 
 type CompFileList []os.FileInfo
