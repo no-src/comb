@@ -2,13 +2,13 @@ package main
 
 import (
 	"bufio"
-	"github.com/no-src/log"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/no-src/log"
 )
 
 func main() {
@@ -39,7 +39,7 @@ func main() {
 	}
 
 	log.Info("current work dir:[%s]", workDir)
-	allFile, err := ioutil.ReadDir(workDir)
+	allFile, err := os.ReadDir(workDir)
 	if err != nil {
 		log.Error(err, "read dir error")
 		return
@@ -70,7 +70,7 @@ func main() {
 	defer combFile.Close()
 	combWriter := bufio.NewWriter(combFile)
 	for _, item := range combFileList {
-		data, err := ioutil.ReadFile(filepath.Join(workDir, item.Name()))
+		data, err := os.ReadFile(filepath.Join(workDir, item.Name()))
 		if err != nil {
 			log.Error(err, "read file error")
 			return
@@ -91,7 +91,7 @@ func main() {
 	}
 }
 
-type CompFileList []os.FileInfo
+type CompFileList []os.DirEntry
 
 func (list CompFileList) Len() int {
 	return len(list)
