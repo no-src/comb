@@ -9,12 +9,13 @@ import (
 	"time"
 
 	"github.com/no-src/log"
+	"github.com/no-src/log/level"
 )
 
 func main() {
 	// init logger
 	defer log.Close()
-	log.InitDefaultLogger(log.NewConsoleLogger(log.DebugLevel))
+	log.InitDefaultLogger(log.NewConsoleLogger(level.DebugLevel))
 
 	currentExeFilePath, err := os.Executable()
 	if err != nil {
